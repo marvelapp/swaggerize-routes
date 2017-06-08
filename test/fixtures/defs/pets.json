@@ -38,15 +38,6 @@
                 "produces": [
                     "application/json"
                 ],
-                "jsonp": "callback",
-                "cache":{
-                  "statuses":[200]
-                },
-                "config": {
-                  "plugins": {
-                    "policies": ["isLoggedIn", "addTracking", "logThis"]
-                  }
-                },
                 "parameters": [
                     {
                         "name": "tags",
@@ -288,23 +279,6 @@
             "required": true,
             "type": "integer",
             "format": "int64"
-        }
-    },
-    "securityDefinitions": {
-        "default": {
-            "type": "oauth2",
-            "scopes": {
-                "read": "read pets.",
-                "write": "write pets."
-            },
-            "x-authorize": "extensions/authorize_default.js"
-        },
-        "secondary": {
-            "type": "oauth2",
-            "scopes": {
-                "read": "read secondary pets.",
-                "write": "write secondary pets."
-            }
         }
     },
     "definitions": {

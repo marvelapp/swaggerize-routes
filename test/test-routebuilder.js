@@ -24,32 +24,12 @@ test('routebuilder', function (t) {
             t.notEqual(route.description, undefined, 'has validate property.');
             t.notEqual(route.name, undefined, 'has name property.');
             t.notEqual(route.path, undefined, 'has path property.');
-            t.notEqual(route.security, undefined, 'has security property.');
             t.notEqual(route.validators, undefined, 'has before property.');
-            if(route.method === 'get' && route.path === '/pets'){
-              t.ok(route.jsonp === 'callback', 'options property is the right one.');
-              t.ok(route.cache.statuses.join(',') === '200', 'options property is the right one.');
-              t.ok(route.config.plugins.policies.join(', ') === 'isLoggedIn, addTracking, logThis', 'options property is the right one.');
-            }
             t.notEqual(route.handler, undefined, 'has handler property.');
             t.notEqual(route.produces, undefined, 'has validate property.');
         });
 
         t.end();
-    });
-
-    t.test('security definitions', function (t) {
-        var route;
-
-        t.plan(5);
-
-        route = routes[1];
-        t.ok(route.security, 'has security definition');
-        t.ok(route.security.default && Array.isArray(route.security.default.scopes), 'default has scopes.');
-        t.ok(route.security.default && typeof route.security.default.authorize === 'function', 'default has an authorize function.');
-        //options.security
-        t.ok(route.security.secondary && Array.isArray(route.security.secondary.scopes), 'secondary has scopes.');
-        t.ok(route.security.secondary && typeof route.security.secondary.authorize === 'function', 'secondary has an authorize function.');
     });
 
     t.test('build from x-handler', function (t) {
@@ -62,7 +42,6 @@ test('routebuilder', function (t) {
             t.notEqual(route.description, undefined, 'has validate property.');
             t.notEqual(route.name, undefined, 'has name property.');
             t.notEqual(route.path, undefined, 'has path property.');
-            t.notEqual(route.security, undefined, 'has security property.');
             t.notEqual(route.validators, undefined, 'has before property.');
             t.notEqual(route.handler, undefined, 'has handler property.');
             t.notEqual(route.produces, undefined, 'has validate property.');
