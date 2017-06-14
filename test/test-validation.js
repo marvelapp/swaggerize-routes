@@ -459,24 +459,4 @@ test('named validation', function (t) {
     });
   });
 
-  t.test('input fail (not present) - parameter name in each details.path', function (t) {
-
-    var parameterName = 'test_details_path_equals_parameter';
-
-    validator.make({
-      name: parameterName,
-      required: true,
-      type: 'integer'
-    }).validate(undefined, function (error) {
-
-      var numErrorDetails = error.details.length;
-
-      t.plan(numErrorDetails + 1);
-      t.ok(error, 'error.');
-      error.details.forEach(function (detail) {
-        t.ok(detail.path === parameterName, 'Expected error.details.path to equal ' + parameterName);
-      });
-    });
-  });
-
 });
