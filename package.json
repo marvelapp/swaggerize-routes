@@ -20,11 +20,12 @@
     "node": "<=4.x"
   },
   "dependencies": {
+    "ajv": "^5.1.5",
     "caller": "^1.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
     "enjoi": "^1.0.0",
-    "is-my-json-valid": "^2.16.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "tape": "^4.2.2",
