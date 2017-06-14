@@ -114,6 +114,13 @@ test('routebuilder', function (t) {
     });
 
     t.test('route validators', function (t) {
+        routes = buildroutes({
+            api: api,
+            basedir: path.join(__dirname, 'fixtures'),
+            defaulthandler: function () {},
+            schemaValidator: schemaValidator
+        });
+
         var route;
 
         route = routes[1];
