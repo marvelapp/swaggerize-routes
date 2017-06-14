@@ -93,6 +93,46 @@ test('validation', function (t) {
         });
     });
 
+    t.test('input fails when invalid type', function (t) {
+        t.plan(3);
+
+        var validate = validator.make({
+            name: 'id',
+            required: true,
+            in: 'body',
+            type: 'string',
+            pattern: '[0-9]+'
+        });
+
+        validate.validate({id: ''}, function (error) {
+            t.ok(error, 'error.');
+        });
+
+        validate.validate({id: null}, function (error) {
+            t.ok(error, 'error.');
+        });
+
+        validate.validate({id: 1}, function (error) {
+            t.ok(error, 'error.');
+        });
+    });
+
+    t.test('input allows empty string when allowEmptyValue: true', function (t) {
+        t.plan(1);
+
+        var validate = validator.make({
+            name: 'id',
+            in: 'query',
+            required: true,
+            type: 'boolean',
+            allowEmptyValue: true
+        });
+
+        validate.validate({id: ''}, function (error) {
+            t.ok(!error, 'error.');
+        });
+    });
+
     [true, false].forEach(function(isRequired){
         ['string', 'boolean', 'integer'].forEach(function(type){
             var requiredInTitle = isRequired? 'required ': 'not required ';
