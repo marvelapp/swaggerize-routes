@@ -123,16 +123,16 @@ test('routebuilder', function (t) {
         t.ok(typeof route.validators[0].schema === 'object', 'has schema object property.');
         t.ok(typeof route.validators[0].validate === 'function', 'has validate fn property.');
 
-        route.validators[0].validate({
+        route.validators[0].validate({pet:{
             id: 0
-        }, function (error, newvalue) {
+        }}, function (error, newvalue) {
             t.ok(error, 'validation failed.');
         });
 
-        route.validators[0].validate({
+        route.validators[0].validate({pet:{
             id: 0,
             name: 'Cat'
-        }, function (error, newvalue) {
+        }}, function (error, newvalue) {
             t.ok(!error, 'validation passed.');
         });
 

@@ -15,9 +15,10 @@ test('validation', function (t) {
 
         validator.make({
             name: 'id',
+            in: 'query',
             required: true,
             type: 'integer'
-        }).validate(1, function (error) {
+        }).validate({id: 1}, function (error) {
             t.ok(!error, 'no error.');
         });
     });
@@ -27,7 +28,7 @@ test('validation', function (t) {
 
         validator.make({
             $ref: '#/parameters/id'
-        }).validate(1, function (error) {
+        }).validate({id: 1}, function (error) {
             t.ok(!error, 'no error.');
         });
     });
@@ -37,16 +38,17 @@ test('validation', function (t) {
 
         var validate = validator.make({
             name: 'id',
+            in: 'query',
             required: true,
             type: 'string',
             pattern: '[0-9]+'
         });
 
-        validate.validate('1', function (error) {
+        validate.validate({id: '1'}, function (error) {
             t.ok(!error, 'no error.');
         });
 
-        validate.validate('abc', function (error) {
+        validate.validate({id: 'abc'}, function (error) {
             t.ok(error, 'error.');
         });
     });
@@ -56,16 +58,17 @@ test('validation', function (t) {
 
         var validate = validator.make({
             name: 'id',
+            in: 'query',
             required: true,
             type: 'string',
     	    minLength: 2
     	});
 
-        validate.validate('1', function (error) {
+        validate.validate({id: '1'}, function (error) {
             t.ok(error, 'error.');
         });
 
-        validate.validate('12', function (error) {
+        validate.validate({id: '12'}, function (error) {
             t.ok(!error, 'no error.');
         });
     });
@@ -75,16 +78,17 @@ test('validation', function (t) {
 
         var validate = validator.make({
             name: 'id',
+            in: 'query',
             required: true,
             type: 'string',
     	    maxLength: 4
     	});
 
-        validate.validate('1', function (error) {
+        validate.validate({id: '1'}, function (error) {
             t.ok(!error, 'no error.');
         });
 
-        validate.validate('12345', function (error) {
+        validate.validate({id: '12345'}, function (error) {
             t.ok(error, 'error.');
         });
     });
@@ -98,10 +102,11 @@ test('validation', function (t) {
 
                 validator.make({
                     name: 'param',
+                    in: 'query',
                     required: isRequired,
                     type: type,
                     allowEmptyValue: true
-                }).validate('', function(error){
+                }).validate({param: ''}, function(error){
                     t.ok(!error, 'no error.');
                 });
             });
@@ -113,7 +118,7 @@ test('validation', function (t) {
 
         validator.make({
             $ref: '/parameters/id'
-        }).validate(1, function (error) {
+        }).validate({id: 1}, function (error) {
             t.ok(!error, 'no error.');
         });
     });
@@ -135,8 +140,9 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: true,
+            in: 'query',
             type: 'integer'
-        }).validate(undefined, function (error) {
+        }).validate({'id': undefined}, function (error) {
             t.ok(error, 'error.');
         });
     });
@@ -147,6 +153,7 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: false,
+            in: 'query',
             type: 'integer'
         }).validate(undefined, function (error) {
             t.ok(!error, 'no error.');
@@ -200,13 +207,14 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: true,
+            in: 'query',
             type: 'array',
             items:  {
                 type: 'string'
             }
-        }).validate('a,b,c', function (error, value) {
+        }).validate({id: 'a,b,c'}, function (error, value) {
             t.ok(!error, 'no error.');
-            t.ok(thing.isArray(value), 'coerced to array.');
+            t.ok(thing.isArray(value.id), 'coerced to array.');
         });
     });
 
@@ -216,14 +224,15 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: true,
+            in: 'query',
             type: 'array',
             items: {
                 type: 'string'
             },
             collectionFormat: 'ssv'
-        }).validate('a b c', function (error, value) {
+        }).validate({id: 'a b c'}, function (error, value) {
             t.ok(!error, 'no error.');
-            t.ok(thing.isArray(value), 'coerced to array.');
+            t.ok(thing.isArray(value.id), 'coerced to array.');
         });
     });
 
@@ -233,12 +242,13 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: true,
+            in: 'query',
             type: 'array',
             items: { type: 'string' },
             collectionFormat: 'tsv'
-        }).validate('a\tb\tc', function (error, value) {
+        }).validate({id: 'a\tb\tc'}, function (error, value) {
             t.ok(!error, 'no error.');
-            t.ok(thing.isArray(value), 'coerced to array.');
+            t.ok(thing.isArray(value.id), 'coerced to array.');
         });
     });
 
@@ -248,12 +258,13 @@ test('validation', function (t) {
         validator.make({
             name: 'id',
             required: true,
+            in: 'query',
             type: 'array',
             items: { type: 'string' },
             collectionFormat: 'pipes'
-        }).validate('a|b|c', function (error, value) {
+        }).validate({id: 'a|b|c'}, function (error, value) {
             t.ok(!error, 'no error.');
-            t.ok(thing.isArray(value), 'coerced to array.');
+            t.ok(thing.isArray(value.id), 'coerced to array.');
         });
     });
 
@@ -264,10 +275,11 @@ test('validation', function (t) {
             validator.make({
                 name: 'id',
                 required: true,
+                in: 'query',
                 type: 'boolean'
-            }).validate(value, function (error, result) {
+            }).validate({id: value}, function (error, result) {
                 t.ok(!error, 'no error.');
-                t.equal(result, false);
+                t.equal(result.id, false);
             });
         });
     });
@@ -278,11 +290,12 @@ test('validation', function (t) {
 
             validator.make({
                 name: 'id',
+                in: 'query',
                 required: true,
                 type: 'boolean'
-            }).validate(value, function (error, result) {
+            }).validate({id: value}, function (error, result) {
                 t.ok(!error, 'no error.');
-                t.equal(result, true);
+                t.equal(result.id, true);
             });
         });
     });
@@ -304,9 +317,10 @@ test('validation', function (t) {
 
         validator.make({
             name: 'id',
+            in: 'query',
             required: true,
             type: 'integer'
-        }).validate('hello', function (error) {
+        }).validate({id: 'hello'}, function (error) {
             t.ok(error, 'error.');
         });
     });
@@ -346,7 +360,7 @@ test('validation', function (t) {
             name: 'user_name',
             type: 'string',
             in: 'formData'
-        }, ['multipart/form-data']).validate('data', function (error) {
+        }, ['multipart/form-data']).validate({user_name: 'data'}, function (error) {
             t.ok(!error, 'no error.');
         });
     });
@@ -381,8 +395,9 @@ test('named validation', function (t) {
     validator.make({
       name: parameterName,
       required: true,
+      in: 'query',
       type: 'integer'
-    }).validate(undefined, function (error) {
+    }).validate({}, function (error) {
       t.ok(error, 'error.');
       t.ok(error.message.indexOf(parameterName) >= 0, 'Expected error.message to contain ' + parameterName);
     });
@@ -392,12 +407,15 @@ test('named validation', function (t) {
     t.plan(2);
 
     var parameterName = 'test_parameter_name_wrong_type';
+    var obj = {};
 
+    obj[parameterName] = 'hello';
     validator.make({
       name: parameterName,
+      in: 'query',
       required: true,
       type: 'integer'
-    }).validate('hello', function (error) {
+    }).validate(obj, function (error) {
       t.ok(error, 'error.');
       t.ok(error.message.indexOf(parameterName) >= 0, 'Expected error.message to contain ' + parameterName);
     });
@@ -407,11 +425,14 @@ test('named validation', function (t) {
 
     var parameterName = 'test_details_message_contains_parameter';
 
+    var obj = {};
+    obj[parameterName] = undefined;
     validator.make({
       name: parameterName,
       required: true,
+      in: 'query',
       type: 'integer'
-    }).validate(undefined, function (error) {
+    }).validate(obj, function (error) {
 
       var numErrorDetails = error.details.length;
 
